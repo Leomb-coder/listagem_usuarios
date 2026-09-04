@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import HeaderComponent from "../components/HeaderComponent";
+import UserListComponent from "../components/UserListComponent";
+import LoadingComponent from "../components/LoadingComponent";
+import UserCardComponent from "../components/UserCardComponent";
+import "./App.css";
 
 const filtrarUsuarioPorTermo = (termo) => (usuario) => {
   const termoLower = termo.toLowerCase();
@@ -42,38 +47,32 @@ export default function App() {
   }, []);
 
   return (
-    <div>
-      <h1>Catálogo de Usuários</h1>
+    <div className="app-container">
+      <HeaderComponent>Catálogo de Usuários</HeaderComponent>
 
       <input
+        className="search-input"
         type="text"
         placeholder="Filtrar usuário..."
-        onChange={(evento) => {
-          setBusca(evento.target.value);
-        }}
+        onChange={(evento) => setBusca(evento.target.value)}
       />
 
-      {carregando && <p>Carregando usuários...</p>}
+      <LoadingComponent loading={carregando}></LoadingComponent>
 
-      <p>Usuários encontrados: {usuarios.length}</p>
+      <p className="user-count">Usuários encontrados: {usuarios.length}</p>
 
-      {error && <p>{error}</p>}
+      {error && <p className="error-message">{error}</p>}
 
       {!carregando && !error && (
         <>
           {usuariosFiltrados.length > 0 ? (
-            <ul>
+            <UserListComponent>
               {usuariosFiltrados.map((usuario) => (
-                <li key={usuario.id}>
-                  <hr />
-                  <strong>{usuario.name}</strong>
-                  <p>{usuario.email}</p>
-                  <p>{usuario.username}</p>
-                </li>
+                <UserCardComponent key={usuario.id} usuario={usuario} />
               ))}
-            </ul>
+            </UserListComponent>
           ) : (
-            <p>Nenhum usuário encontrado.</p>
+            <p className="empty-message">Nenhum usuário encontrado.</p>
           )}
         </>
       )}
