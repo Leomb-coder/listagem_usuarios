@@ -1,0 +1,52 @@
+.fail-box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 24px 16px;
+    animation: fail-shake 0.4s ease-in-out;
+}
+
+.fail-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #fdecea;
+    color: #d93025;
+    margin-bottom: 16px;
+}
+
+.fail-box h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.fail-box .modal-close {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+}
+
+@keyframes fail-shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    20% {
+        transform: translateX(-6px);
+    }
+    40% {
+        transform: translateX(6px);
+    }
+    60% {
+        transform: translateX(-4px);
+    }
+    80% {
+        transform: translateX(4px);
+    }
+}

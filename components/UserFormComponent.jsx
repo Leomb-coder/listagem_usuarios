@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./UserFormComponent.css";
 
 export default function UserFormComponent({ onCadastrar }) {
     const [nome, setNome] = useState("");
@@ -27,44 +28,38 @@ export default function UserFormComponent({ onCadastrar }) {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className="user-form" onSubmit={handleSubmit}>
             <input
                 type="text"
                 placeholder="Nome"
                 value={nome}
-                onChange={(evento) => {
-                    setNome(evento.target.value);
-                }}
-            ></input>
+                onChange={(evento) => setNome(evento.target.value)}
+            />
 
             <input
                 type="text"
                 placeholder="Username"
                 value={username}
-                onChange={(evento) => {
-                    setUsername(evento.target.value);
-                }}
-            ></input>
+                onChange={(evento) => setUsername(evento.target.value)}
+            />
 
             <input
-                type="text"
-                placeholder="email"
+                type="email"
+                placeholder="Email"
                 value={email}
-                onChange={(evento) => {
-                    setEmail(evento.target.value);
-                }}
-            ></input>
+                onChange={(evento) => setEmail(evento.target.value)}
+            />
 
             <input
                 type="text"
                 placeholder="Telefone"
                 value={telefone}
-                onChange={(evento) => {
-                    setTelefone(evento.target.value);
-                }}
-            ></input>
+                onChange={(evento) => setTelefone(evento.target.value)}
+            />
 
-            <button type="submit">Cadastrar</button>
+            <button type="submit" className="user-form-submit">
+                Cadastrar
+            </button>
         </form>
     );
 }

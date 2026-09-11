@@ -19,7 +19,7 @@ body {
 /* Header */
 .app-header {
   text-align: center;
-  padding: 32px 0;
+  padding: 32px 0 40px;
 }
 
 .app-header h1 {
@@ -27,6 +27,7 @@ body {
   font-weight: 700;
   color: #1a1a2e;
   margin: 0;
+  letter-spacing: -0.02em;
 }
 
 /* Input de busca */
@@ -38,9 +39,14 @@ body {
   padding: 12px 16px;
   font-size: 1rem;
   border: 1px solid #d0d3d9;
-  border-radius: 8px;
+  border-radius: 10px;
   outline: none;
+  background-color: #ffffff;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-input::placeholder {
+  color: #a8adb5;
 }
 
 .search-input:focus {
@@ -53,7 +59,7 @@ body {
   text-align: center;
   color: #6b7280;
   font-size: 0.95rem;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .error-message {
@@ -61,7 +67,7 @@ body {
   color: #d64545;
   background-color: #fdeaea;
   border: 1px solid #f5c2c2;
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 12px;
   max-width: 500px;
   margin: 0 auto 16px;
@@ -81,6 +87,29 @@ body {
   margin: 24px 0;
 }
 
+/* Botão principal */
+button {
+  display: block;
+  margin: 24px auto 0;
+  padding: 12px 24px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #4f8cff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+button:hover {
+  background-color: #3d78e6;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
 /* Lista de usuários em grid */
 .user-list {
   list-style: none;
@@ -98,17 +127,20 @@ body {
   padding: 18px 20px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
   border: 1px solid #ececec;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
 }
 
 .user-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 20px rgba(79, 140, 255, 0.12);
+  border-color: #cfe0ff;
 }
 
 .user-name {
   display: block;
   font-size: 1.1rem;
+  font-weight: 600;
   color: #1a1a2e;
   margin-bottom: 6px;
 }
@@ -125,6 +157,17 @@ body {
   font-size: 0.85rem;
 }
 
+/* Detalhes / novo usuário (cards de destaque abaixo da lista) */
+.user-details,
+.novo-usuario {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-top: 24px;
+  border: 1px solid #ececec;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
 /* Responsivo */
 @media (max-width: 480px) {
   .app-header h1 {
@@ -133,5 +176,9 @@ body {
 
   .user-list {
     grid-template-columns: 1fr;
+  }
+
+  button {
+    width: 100%;
   }
 }

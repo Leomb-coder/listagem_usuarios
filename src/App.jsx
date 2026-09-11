@@ -4,10 +4,11 @@ import HeaderComponent from "../components/HeaderComponent";
 import UserListComponent from "../components/UserListComponent";
 import LoadingComponent from "../components/LoadingComponent";
 import UserDetailsComponent from "../components/UserDetailsComponent";
-import UserFormComponent from "../components/UserFormComponent";
 import "./App.css";
 import NovoUsuarioComponent from "../components/NovoUsuarioComponent";
 import ModalComponent from "../components/ModalComponent";
+import SuccessComponent from "../components/SuccessComponent";
+import FailComponent from "../components/FailComponent";
 
 const filtrarUsuarioPorTermo = (termo) => (usuario) => {
     const termoLower = termo.toLowerCase();
@@ -27,11 +28,21 @@ export default function App() {
     const [busca, setBusca] = useState("");
     const [usuarioSelecionado, setUsuarioSelecionado] = useState(null);
     const [novoUsuario, setNovoUsuario] = useState(null);
-    const [modalOpen, setModalOpen] = useState(null);
+    const [modalOpen, setModalOpen] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const [fail, setFail] = useState(false);
 
     const toggleModal = () => {
-        setModalOpen(!modalOpen)
-    }
+        setModalOpen(!modalOpen);
+    };
+
+    const toggleSuccess = () => {
+        setSuccess(!success);
+    };
+
+    const toggleFail = () => {
+        setFail(!fail);
+    };
 
     const usuariosFiltrados = usuarios.filter(filtrarUsuarioPorTermo(busca));
 
@@ -69,11 +80,13 @@ export default function App() {
     async function cadastrarUsuario(usuario) {
         try {
             const response = await axios.post(`${url}/users`, usuario);
-
             const data = response.data;
             setNovoUsuario(data);
+            setModalOpen(false);
+            toggleSuccess();
         } catch (error) {
             console.log("Erro ao cadastrar usuário: ", error);
+            toggleFail();
         }
     }
 
@@ -124,11 +137,34 @@ export default function App() {
                         <NovoUsuarioComponent novoUsuario={novoUsuario} />
                     )}
 
-                    {/* Botão para abrir modal */}
+                    <br/>
                     <button onClick={toggleModal}>Criar usuário</button>
 
                     {modalOpen && (
-                        <ModalComponent cadastrarUsuario={cadastrarUsuario} onClose={toggleModal}/>
+                        <ModalComponent
+                            cadastrarUsuario={cadastrarUsuario}
+                            onClose={toggleModal}
+                        />
+                    )}
+
+                    {success && (
+                        <div className="modal-overlay">
+                            <div className="modal-content">
+                                <SuccessComponent onClose={toggleSuccess}>
+                                    Usuário cadastrado com sucesso!
+                                </SuccessComponent>
+                            </div>
+                        </div>
+                    )}
+
+                    {fail && (
+                        <div className="modal-overlay">
+                            <div className="modal-content">
+                                <FailComponent onClose={toggleFail}>
+                                    Usuário cadastrado com sucesso!
+                                </FailComponent>
+                            </div>
+                        </div>
                     )}
                 </>
             )}
