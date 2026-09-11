@@ -7,6 +7,7 @@ import UserDetailsComponent from "../components/UserDetailsComponent";
 import UserFormComponent from "../components/UserFormComponent";
 import "./App.css";
 import NovoUsuarioComponent from "../components/NovoUsuarioComponent";
+import ModalComponent from "../components/ModalComponent";
 
 const filtrarUsuarioPorTermo = (termo) => (usuario) => {
     const termoLower = termo.toLowerCase();
@@ -26,6 +27,11 @@ export default function App() {
     const [busca, setBusca] = useState("");
     const [usuarioSelecionado, setUsuarioSelecionado] = useState(null);
     const [novoUsuario, setNovoUsuario] = useState(null);
+    const [modalOpen, setModalOpen] = useState(null);
+
+    const toggleModal = () => {
+        setModalOpen(!modalOpen)
+    }
 
     const usuariosFiltrados = usuarios.filter(filtrarUsuarioPorTermo(busca));
 
@@ -114,10 +120,15 @@ export default function App() {
                         />
                     )}
 
-                    <UserFormComponent onCadastrar={cadastrarUsuario} />
-
                     {novoUsuario && (
                         <NovoUsuarioComponent novoUsuario={novoUsuario} />
+                    )}
+
+                    {/* Botão para abrir modal */}
+                    <button onClick={toggleModal}>Criar usuário</button>
+
+                    {modalOpen && (
+                        <ModalComponent cadastrarUsuario={cadastrarUsuario} onClose={toggleModal}/>
                     )}
                 </>
             )}
