@@ -3,8 +3,10 @@ import axios from "axios";
 import HeaderComponent from "../components/HeaderComponent";
 import UserListComponent from "../components/UserListComponent";
 import LoadingComponent from "../components/LoadingComponent";
-import UserDetailsComponent from "../components/UserDetailsComponent"
+import UserDetailsComponent from "../components/UserDetailsComponent";
+import UserFormComponent from "../components/UserFormComponent";
 import "./App.css";
+import NovoUsuarioComponent from "../components/NovoUsuarioComponent";
 
 const filtrarUsuarioPorTermo = (termo) => (usuario) => {
     const termoLower = termo.toLowerCase();
@@ -23,6 +25,7 @@ export default function App() {
     const [carregando, setCarregando] = useState(false);
     const [busca, setBusca] = useState("");
     const [usuarioSelecionado, setUsuarioSelecionado] = useState(null);
+    const [novoUsuario, setNovoUsuario] = useState(null);
 
     const usuariosFiltrados = usuarios.filter(filtrarUsuarioPorTermo(busca));
 
@@ -54,7 +57,18 @@ export default function App() {
     }
 
     function limparDetalhesUsuario() {
-        setUsuarioSelecionado(null)
+        setUsuarioSelecionado(null);
+    }
+
+    async function cadastrarUsuario(usuario) {
+        try {
+            const response = await axios.post(`${url}/users`, usuario);
+
+            const data = response.data;
+            setNovoUsuario(data);
+        } catch (error) {
+            console.log("Erro ao cadastrar usuário: ", error);
+        }
     }
 
     useEffect(() => {
@@ -100,6 +114,11 @@ export default function App() {
                         />
                     )}
 
+                    <UserFormComponent onCadastrar={cadastrarUsuario} />
+
+                    {novoUsuario && (
+                        <NovoUsuarioComponent novoUsuario={novoUsuario} />
+                    )}
                 </>
             )}
         </div>
