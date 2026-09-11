@@ -3,5 +3,5 @@ export default function HeaderComponent({ children }) {
         <header className="app-header">
             <h1>{children}</h1>
         </header>
-    )
+    );
 }
